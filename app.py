@@ -193,7 +193,7 @@ if file:
             )
 
         if tamanho_grafico == "Pequeno":
-            altura = 500
+            altura = 480
 
         elif tamanho_grafico == "Médio":
             altura = 550
