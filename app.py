@@ -109,19 +109,9 @@ if file:
         st.error("Formato não suportado.")
         st.stop()
 
-    ignorar = [
-        "data",
-        "hora",
-        "date",
-        "time",
-        "timestamp",
-        "carimbo"
-    ]
+    df = df.iloc[:, 1:]
 
-    colunas = [
-        c for c in df.columns
-        if not any(i in c.lower() for i in ignorar)
-    ]
+    colunas = df.columns.tolist()
 
     if not colunas:
         st.warning("Nenhuma coluna válida encontrada.")
