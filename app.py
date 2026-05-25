@@ -10,6 +10,9 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Image, KeepTogether, PageBreak, Paragraph, SimpleDocTemplate, Spacer
 
 
+# =========================
+# CONFIG
+# =========================
 st.set_page_config(
     page_title="Dashboard PRO",
     page_icon="📊",
