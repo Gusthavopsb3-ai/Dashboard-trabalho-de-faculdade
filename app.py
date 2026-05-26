@@ -728,21 +728,35 @@ if file:
 
                 st.caption(f"Filtro aplicado: {filtro_curso}")
 
-               if tipo == "Pizza":
-            fig_pdf.update_layout(
-                showlegend=True,
-                # Aumentamos a margem da direita para garantir que a legenda caiba
-                margin=dict(l=20, r=180, t=40, b=40),
-                legend=dict(
-                    font=dict(size=14), # Um pouco maior para leitura no PDF
-                    orientation="v",
-                    # x=0.95 traz a legenda para dentro da área do gráfico
-                    x=0.95, 
-                    y=0.5,
-                    xanchor="left",
-                    yanchor="middle",
-                ),
-            )
+                if tipo_grafico == "Pizza":
+                    fig = px.pie(
+                        dados,
+                        names="Resposta",
+                        values="Quantidade",
+                        color="Resposta",
+                        color_discrete_map=cores,
+                    )
+                    fig.update_traces(
+                        textinfo="percent",
+                        textposition="inside",
+                        textfont_color="#000000",
+                    )
+                    fig.update_layout(
+                        legend_itemclick=False,
+                        legend_itemdoubleclick=False,
+                        height=altura,
+                        dragmode=False,
+                        margin=dict(l=20, r=20, t=40, b=40),
+                        legend=dict(
+                            orientation="v",
+                            x=1.02,
+                            y=0.5,
+                            xanchor="left",
+                            yanchor="middle",
+                            font=dict(size=12, color=axis_color),
+                        ),
+                    )
+
                 elif tipo_grafico == "Barra":
                     if "satisfação" in col.lower() or "satisfacao" in col.lower():
                         dados_ordenados = dados.sort_values(
