@@ -820,7 +820,8 @@ if file:
                     fig = px.line(dados_ogiva, x="Resposta", y="Acumulado", markers=True)
                     fig.update_xaxes(
                         type="category",
-                        tickangle=0, # Voltamos para 0 (completamente horizontal)
+                        # Altere o tickangle de 0 para "auto"
+                        tickangle="auto", 
                         dtick=1,
                         tickmode="array",
                         tickvals=dados_ogiva["Resposta"],
