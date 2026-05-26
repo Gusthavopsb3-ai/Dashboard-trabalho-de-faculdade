@@ -117,13 +117,11 @@ style_css = f"""
     --soft-accent: {soft_accent};
 }}
 
-/* Esconde o menu de opções (hambúrguer), rodapé e botão de deploy */
 #MainMenu {{visibility: hidden !important;}}
 footer {{visibility: hidden !important;}}
 [data-testid="stAppDeployButton"] {{display: none !important;}}
 [data-testid="stStatusWidget"] {{visibility: hidden !important;}}
 
-/* Torna o cabeçalho transparente em vez de ocultá-lo completamente */
 [data-testid="stHeader"] {{
     background-color: transparent !important;
     background-image: none !important;
@@ -131,7 +129,6 @@ footer {{visibility: hidden !important;}}
     border: none !important;
 }}
 
-/* Garante e estiliza o botão de abrir a barra lateral (setinha) para mobile e PC */
 [data-testid="collapsedControl"] {{
     background-color: {panel_bg} !important;
     border-right: 1px solid {panel_border} !important;
@@ -456,12 +453,14 @@ def padronizar_legenda(label):
 
     if "até" in texto or "ate" in texto:
         if nums:
+            # Mantém a linha única se for curto
             return f"Até {formatar(nums[0])}"
 
     if len(nums) >= 2:
         inicio = formatar(nums[0])
         fim = formatar(nums[1])
-        return f"De {inicio} a {fim}"
+        # AQUI ESTÁ O TRUQUE: A tag <br> quebra a frase em duas linhas!
+        return f"De {inicio}<br>a {fim}"
 
     if len(nums) == 1:
         return formatar(nums[0])
@@ -536,7 +535,8 @@ def exportar_graficos_para_pdf(lista_de_graficos, cor_fundo_png):
                 showlegend=False,
                 margin=dict(l=margem_esq, r=40, t=40, b=margem_inf),
             )
-            fig_pdf.update_xaxes(automargin=True, tickangle=-45 if tipo == "Ogiva" else 0, dtick=1)
+            # Mantemos tickangle=0 (reto) aqui também
+            fig_pdf.update_xaxes(automargin=True, tickangle=0, dtick=1)
             fig_pdf.update_yaxes(automargin=True)
 
         if tipo == "Ogiva":
@@ -818,7 +818,7 @@ if file:
                     fig = px.line(dados_ogiva, x="Resposta", y="Acumulado", markers=True)
                     fig.update_xaxes(
                         type="category",
-                        tickangle=-45,
+                        tickangle=0, # Voltamos para 0 (completamente horizontal)
                         dtick=1,
                         tickmode="array",
                         tickvals=dados_ogiva["Resposta"],
