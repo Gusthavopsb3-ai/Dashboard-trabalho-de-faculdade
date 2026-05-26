@@ -746,10 +746,12 @@ if file:
                         legend_itemdoubleclick=False,
                         height=altura,
                         dragmode=False,
-                        margin=dict(l=20, r=20, t=40, b=40),
+                        # Aumente a margem direita (r) para 150 ou 180 para dar espaço ao texto
+                        margin=dict(l=20, r=150, t=40, b=40), 
                         legend=dict(
                             orientation="v",
-                            x=1.02,
+                            # Reduza o valor de x (estava 1.02) para trazer um pouco mais para a esquerda
+                            x=0.98, 
                             y=0.5,
                             xanchor="left",
                             yanchor="middle",
