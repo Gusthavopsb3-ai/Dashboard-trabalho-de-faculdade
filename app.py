@@ -20,36 +20,9 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# =========================
-# OCULTANDO A INTERFACE DO STREAMLIT (PARA MOBILE/PC)
-# =========================
-st.markdown("""
-    <style>
-    /* Esconde o menu de opções (hambúrguer) */
-    #MainMenu {visibility: hidden !important;}
-    
-    /* Esconde o rodapé (Made with Streamlit) */
-    footer {visibility: hidden !important;}
-    
-    /* Esconde o cabeçalho superior do Streamlit */
-    header {visibility: hidden !important;}
-    
-    /* Esconde o botão de Deploy, caso ainda apareça */
-    [data-testid="stAppDeployButton"] {display: none !important;}
-    
-    /* Esconde o status de carregamento no canto superior */
-    [data-testid="stStatusWidget"] {visibility: hidden !important;}
-    
-    /* Remove espaço em branco extra no topo causado pela remoção do header */
-    .block-container {padding-top: 2rem !important;}
-    </style>
-""", unsafe_allow_html=True)
-
-
 # Criando o controle de tema na barra lateral
 st.sidebar.markdown("### 🎨 Visualização")
 
-# Inicializa o estado do tema se não existir (Padrão: Escuro)
 if "tema_claro" not in st.session_state:
     st.session_state.tema_claro = False
 
@@ -144,6 +117,33 @@ style_css = f"""
     --soft-accent: {soft_accent};
 }}
 
+/* Esconde o menu de opções (hambúrguer), rodapé e botão de deploy */
+#MainMenu {{visibility: hidden !important;}}
+footer {{visibility: hidden !important;}}
+[data-testid="stAppDeployButton"] {{display: none !important;}}
+[data-testid="stStatusWidget"] {{visibility: hidden !important;}}
+
+/* Torna o cabeçalho transparente em vez de ocultá-lo completamente */
+[data-testid="stHeader"] {{
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}}
+
+/* Garante e estiliza o botão de abrir a barra lateral (setinha) para mobile e PC */
+[data-testid="collapsedControl"] {{
+    background-color: {panel_bg} !important;
+    border-right: 1px solid {panel_border} !important;
+    border-bottom: 1px solid {panel_border} !important;
+    border-top: 1px solid {panel_border} !important;
+    border-radius: 0 8px 8px 0 !important;
+    top: 12px !important;
+    display: flex !important;
+    visibility: visible !important;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.15) !important;
+}}
+
 .stApp {{
     background-color: {bg_color} !important;
     background-image: {app_background} !important;
@@ -167,6 +167,7 @@ style_css = f"""
     position: relative;
     z-index: 1;
     max-width: 1480px;
+    padding-top: 2rem !important;
     padding-bottom: 3rem;
 }}
 
@@ -317,13 +318,11 @@ hr {{
     border-color: {panel_border} !important;
 }}
 
-/* Esconder notificações do Plotly */
 .plotly-notifier {{
     display: none !important;
     visibility: hidden !important;
 }}
 
-/* Botões */
 .stButton > button {{
     background-color: {input_bg} !important;
     color: {text_color} !important;
@@ -344,7 +343,6 @@ hr {{
     box-shadow: 0 0 0 3px {soft_accent} !important;
 }}
 
-/* Botão de download fixo */
 [data-testid="stDownloadButton"] {{
     position: fixed !important;
     top: 0.65rem !important;
@@ -372,13 +370,6 @@ hr {{
     color: #ffffff !important;
 }}
 
-[data-testid="collapsedControl"] {{
-    background-color: transparent !important;
-    z-index: 999999 !important;
-    display: flex !important;
-    visibility: visible !important;
-}}
-
 [data-testid="collapsedControl"] button,
 [data-testid="collapsedControl"] svg,
 [data-testid="stSidebar"] button[title="Collapse sidebar"] svg {{
@@ -389,7 +380,7 @@ hr {{
 
 @media (max-width: 768px) {{
     .main .block-container {{
-        padding-top: 2.3rem;
+        padding-top: 3.2rem !important;
     }}
 
     .dashboard-title {{
@@ -609,9 +600,6 @@ if file:
         default=[colunas[0]],
     )
 
-    # =========================
-    # CURSO
-    # =========================
     if "curso_anterior" not in st.session_state:
         st.session_state.curso_anterior = "Todos"
 
@@ -620,9 +608,6 @@ if file:
         ["Todos", "Engenharia de Software", "Segurança da Informação"],
     )
 
-    # =========================
-    # LIMPA FILTROS E ESTADO DO PDF QUANDO MUDA O CURSO
-    # =========================
     if filtro_curso != st.session_state.curso_anterior:
         keys_para_remover = [
             k for k in st.session_state.keys() if k.startswith("filtro_")
