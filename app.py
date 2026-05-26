@@ -11,7 +11,7 @@ from reportlab.platypus import Image, KeepTogether, PageBreak, Paragraph, Simple
 
 
 # =========================
-# CONFIG
+# CONFIGURANDO A PÁGINA
 # =========================
 st.set_page_config(
     page_title="Dashboard PRO",
@@ -19,6 +19,32 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# =========================
+# OCULTANDO A INTERFACE DO STREAMLIT (PARA MOBILE/PC)
+# =========================
+st.markdown("""
+    <style>
+    /* Esconde o menu de opções (hambúrguer) */
+    #MainMenu {visibility: hidden !important;}
+    
+    /* Esconde o rodapé (Made with Streamlit) */
+    footer {visibility: hidden !important;}
+    
+    /* Esconde o cabeçalho superior do Streamlit */
+    header {visibility: hidden !important;}
+    
+    /* Esconde o botão de Deploy, caso ainda apareça */
+    [data-testid="stAppDeployButton"] {display: none !important;}
+    
+    /* Esconde o status de carregamento no canto superior */
+    [data-testid="stStatusWidget"] {visibility: hidden !important;}
+    
+    /* Remove espaço em branco extra no topo causado pela remoção do header */
+    .block-container {padding-top: 2rem !important;}
+    </style>
+""", unsafe_allow_html=True)
+
 
 # Criando o controle de tema na barra lateral
 st.sidebar.markdown("### 🎨 Visualização")
@@ -100,7 +126,7 @@ else:
     caret_color = "#ffffff"
 
 # =========================
-# CSS
+# CSS GERAL DA APLICAÇÃO
 # =========================
 style_css = f"""
 <style>
@@ -141,7 +167,6 @@ style_css = f"""
     position: relative;
     z-index: 1;
     max-width: 1480px;
-    padding-top: 3.1rem;
     padding-bottom: 3rem;
 }}
 
@@ -319,11 +344,6 @@ hr {{
     box-shadow: 0 0 0 3px {soft_accent} !important;
 }}
 
-/* Esconder o botão Deploy */
-[data-testid="stAppDeployButton"] {{
-    display: none !important;
-}}
-
 /* Botão de download fixo */
 [data-testid="stDownloadButton"] {{
     position: fixed !important;
@@ -350,19 +370,6 @@ hr {{
     background-color: {accent_hover} !important;
     border-color: {accent_hover} !important;
     color: #ffffff !important;
-}}
-
-#MainMenu,
-[data-testid="stDecoration"],
-[data-testid="stStatusWidget"],
-footer {{
-    display: none !important;
-    visibility: hidden !important;
-}}
-
-[data-testid="stHeader"] {{
-    background-color: transparent !important;
-    background: transparent !important;
 }}
 
 [data-testid="collapsedControl"] {{
@@ -754,7 +761,7 @@ if file:
                         legend_itemdoubleclick=False,
                         height=altura,
                         dragmode=False,
-                        margin=dict(l=20, r=300, t=40, b=40),
+                        margin=dict(l=20, r=20, t=40, b=40),
                         legend=dict(
                             orientation="v",
                             x=1.02,
@@ -788,7 +795,7 @@ if file:
                         height=altura,
                         dragmode=False,
                         showlegend=False,
-                        margin=dict(l=250, r=40, t=40, b=40),
+                        margin=dict(l=10, r=20, t=40, b=40),
                         yaxis={
                             "categoryorder": "array",
                             "categoryarray": dados_ordenados["Resposta"].tolist(),
