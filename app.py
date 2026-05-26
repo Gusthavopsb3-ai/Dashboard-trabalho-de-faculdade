@@ -453,13 +453,11 @@ def padronizar_legenda(label):
 
     if "até" in texto or "ate" in texto:
         if nums:
-            # Mantém a linha única se for curto
             return f"Até {formatar(nums[0])}"
 
     if len(nums) >= 2:
         inicio = formatar(nums[0])
         fim = formatar(nums[1])
-        # AQUI ESTÁ O TRUQUE: A tag <br> quebra a frase em duas linhas!
         return f"De {inicio}<br>a {fim}"
 
     if len(nums) == 1:
@@ -535,8 +533,10 @@ def exportar_graficos_para_pdf(lista_de_graficos, cor_fundo_png):
                 showlegend=False,
                 margin=dict(l=margem_esq, r=40, t=40, b=margem_inf),
             )
-            # Mantemos tickangle=0 (reto) aqui também
-            fig_pdf.update_xaxes(automargin=True, tickangle=0, dtick=1)
+            
+            # --- AJUSTE CONDICIONAL PARA O ÂNGULO NO PDF ---
+            angulo_pdf = -45 if tipo == "Ogiva" else 0
+            fig_pdf.update_xaxes(automargin=True, tickangle=angulo_pdf, dtick=1)
             fig_pdf.update_yaxes(automargin=True)
 
         if tipo == "Ogiva":
@@ -746,11 +746,9 @@ if file:
                         legend_itemdoubleclick=False,
                         height=altura,
                         dragmode=False,
-                        # Aumente a margem direita (r) para 150 ou 180 para dar espaço ao texto
                         margin=dict(l=20, r=150, t=40, b=40), 
                         legend=dict(
                             orientation="v",
-                            # Reduza o valor de x (estava 1.02) para trazer um pouco mais para a esquerda
                             x=0.98, 
                             y=0.5,
                             xanchor="left",
@@ -818,9 +816,11 @@ if file:
                     dados_ogiva["Acumulado"] = dados_ogiva["Quantidade"].cumsum()
 
                     fig = px.line(dados_ogiva, x="Resposta", y="Acumulado", markers=True)
+                    
+                    # --- ALTERADO TICKANGLE PARA -45 PARA INCLINAR O TEXTO ---
                     fig.update_xaxes(
                         type="category",
-                        tickangle=0, # Voltamos para 0 (completamente horizontal)
+                        tickangle=-45, 
                         dtick=1,
                         tickmode="array",
                         tickvals=dados_ogiva["Resposta"],
