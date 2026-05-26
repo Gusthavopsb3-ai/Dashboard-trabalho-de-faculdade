@@ -536,7 +536,7 @@ def exportar_graficos_para_pdf(lista_de_graficos, cor_fundo_png):
                 showlegend=False,
                 margin=dict(l=margem_esq, r=40, t=40, b=margem_inf),
             )
-            fig_pdf.update_xaxes(automargin=True, tickangle=0, dtick=1)
+            fig_pdf.update_xaxes(automargin=True, tickangle=-45 if tipo == "Ogiva" else 0, dtick=1)
             fig_pdf.update_yaxes(automargin=True)
 
         if tipo == "Ogiva":
@@ -818,7 +818,7 @@ if file:
                     fig = px.line(dados_ogiva, x="Resposta", y="Acumulado", markers=True)
                     fig.update_xaxes(
                         type="category",
-                        tickangle=0,
+                        tickangle=-45,
                         dtick=1,
                         tickmode="array",
                         tickvals=dados_ogiva["Resposta"],
