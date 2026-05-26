@@ -746,17 +746,20 @@ if file:
                         legend_itemdoubleclick=False,
                         height=altura,
                         dragmode=False,
-                        margin=dict(l=20, r=20, t=40, b=40),
+                        # Ajustamos a margem: menos espaço no lado direito (r=120)
+                        margin=dict(l=20, r=120, t=40, b=40),
                         legend=dict(
                             orientation="v",
-                            x=1.02,
+                            # Trazemos a legenda um pouco mais para a esquerda (x=0.95)
+                            x=0.95, 
                             y=0.5,
                             xanchor="left",
                             yanchor="middle",
-                            font=dict(size=12, color=axis_color),
+                            font=dict(size=11, color=axis_color),
+                            # Opcional: limita a largura da legenda para não cortar o texto
+                            itemwidth=40 
                         ),
                     )
-
                 elif tipo_grafico == "Barra":
                     if "satisfação" in col.lower() or "satisfacao" in col.lower():
                         dados_ordenados = dados.sort_values(
