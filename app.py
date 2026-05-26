@@ -746,16 +746,18 @@ if file:
                         legend_itemdoubleclick=False,
                         height=altura,
                         dragmode=False,
-                        # Aumentei a margem direita (r) para 150 para dar mais espaço
-                        margin=dict(l=20, r=150, t=40, b=40),
+                        # Ajustamos a margem: menos espaço no lado direito (r=120)
+                        margin=dict(l=20, r=120, t=40, b=40),
                         legend=dict(
                             orientation="v",
-                            # Trouxe a legenda para x=0.85 (quanto menor, mais para a esquerda)
-                            x=0.85, 
+                            # Trazemos a legenda um pouco mais para a esquerda (x=0.95)
+                            x=0.95, 
                             y=0.5,
                             xanchor="left",
                             yanchor="middle",
                             font=dict(size=11, color=axis_color),
+                            # Opcional: limita a largura da legenda para não cortar o texto
+                            itemwidth=40 
                         ),
                     )
                 elif tipo_grafico == "Barra":
