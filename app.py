@@ -238,6 +238,13 @@ input, select, textarea {{
     border-radius: 8px !important;
 }}
 
+/* CORREÇÃO DO BUG: Remove o fundo invisível do campo de busca interno que cobria os itens */
+div[data-baseweb="select"] input {{
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}}
+
 div[class*="stMultiSelect"] div[data-baseweb="select"] > div {{
     background-color: {input_bg} !important;
 }}
@@ -393,7 +400,6 @@ hr {{
 """
 
 st.markdown(style_css, unsafe_allow_html=True)
-
 # =========================
 # TÍTULO
 # =========================
