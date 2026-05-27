@@ -9,7 +9,6 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Image, KeepTogether, PageBreak, Paragraph, SimpleDocTemplate, Spacer
 
-
 # =========================
 # CONFIGURANDO A PÁGINA
 # =========================
@@ -26,10 +25,8 @@ st.sidebar.markdown("### 🎨 Visualização")
 if "tema_claro" not in st.session_state:
     st.session_state.tema_claro = False
 
-
 def alternar_tema():
     st.session_state.tema_claro = not st.session_state.tema_claro
-
 
 label_botao = "☀️ Modo Claro" if not st.session_state.tema_claro else "🌙 Modo Escuro"
 st.sidebar.button(label_botao, on_click=alternar_tema, use_container_width=True)
@@ -245,25 +242,24 @@ div[class*="stMultiSelect"] div[data-baseweb="select"] > div {{
     background-color: {input_bg} !important;
 }}
 
-span[data-baseweb="tag"], div[data-baseweb="tag"] {
+span[data-baseweb="tag"], div[data-baseweb="tag"] {{
     background-color: {tag_bg} !important;
     color: {tag_text} !important;
     border: 1px solid {input_border} !important;
     border-radius: 8px !important;
-}
+}}
 
-/* O background: transparent aqui é o que mata a mancha preta de vez */
-span[data-baseweb="tag"] span, div[data-baseweb="tag"] span {
+span[data-baseweb="tag"] span, div[data-baseweb="tag"] span {{
     color: {tag_text} !important;
     background: transparent !important; 
-}
+}}
 
 span[data-baseweb="tag"] button, div[data-baseweb="tag"] button,
-span[data-baseweb="tag"] svg, div[data-baseweb="tag"] svg {
+span[data-baseweb="tag"] svg, div[data-baseweb="tag"] svg {{
     fill: {icon_color} !important;
     color: {icon_color} !important;
     background: transparent !important;
-}
+}}
 
 div[data-baseweb="select"] svg {{
     fill: {text_color} !important;
@@ -462,7 +458,7 @@ def padronizar_legenda(label):
     if len(nums) >= 2:
         inicio = formatar(nums[0])
         fim = formatar(nums[1])
-        # AQUI ESTÁ O TRUQUE: A tag <br> quebra a frase em duas linhas!
+        # A tag <br> quebra a frase em duas linhas
         return f"De {inicio}<br>a {fim}"
 
     if len(nums) == 1:
@@ -749,11 +745,9 @@ if file:
                         legend_itemdoubleclick=False,
                         height=altura,
                         dragmode=False,
-                        # Aumente a margem direita (r) para 150 ou 180 para dar espaço ao texto
                         margin=dict(l=20, r=150, t=40, b=40), 
                         legend=dict(
                             orientation="v",
-                            # Reduza o valor de x (estava 1.02) para trazer um pouco mais para a esquerda
                             x=0.98, 
                             y=0.5,
                             xanchor="left",
@@ -823,7 +817,7 @@ if file:
                     fig = px.line(dados_ogiva, x="Resposta", y="Acumulado", markers=True)
                     fig.update_xaxes(
                         type="category",
-                        tickangle=0, # Voltamos para 0 (completamente horizontal)
+                        tickangle=0,
                         dtick=1,
                         tickmode="array",
                         tickvals=dados_ogiva["Resposta"],
