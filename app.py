@@ -245,22 +245,25 @@ div[class*="stMultiSelect"] div[data-baseweb="select"] > div {{
     background-color: {input_bg} !important;
 }}
 
-div[data-baseweb="tag"] {{
+span[data-baseweb="tag"], div[data-baseweb="tag"] {
     background-color: {tag_bg} !important;
     color: {tag_text} !important;
     border: 1px solid {input_border} !important;
     border-radius: 8px !important;
-}}
+}
 
-div[data-baseweb="tag"] span {{
+/* O background: transparent aqui é o que mata a mancha preta de vez */
+span[data-baseweb="tag"] span, div[data-baseweb="tag"] span {
     color: {tag_text} !important;
-}}
+    background: transparent !important; 
+}
 
-div[data-baseweb="tag"] button,
-div[data-baseweb="tag"] svg {{
+span[data-baseweb="tag"] button, div[data-baseweb="tag"] button,
+span[data-baseweb="tag"] svg, div[data-baseweb="tag"] svg {
     fill: {icon_color} !important;
     color: {icon_color} !important;
-}}
+    background: transparent !important;
+}
 
 div[data-baseweb="select"] svg {{
     fill: {text_color} !important;
