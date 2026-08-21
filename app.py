@@ -9,9 +9,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Image, KeepTogether, PageBreak, Paragraph, SimpleDocTemplate, Spacer
 
-# =========================
-# CONFIGURANDO A PÁGINA
-# =========================
+
 st.set_page_config(
     page_title="Dashboard PRO",
     page_icon="📊",
@@ -19,7 +17,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Criando o controle de tema na barra lateral
 st.sidebar.markdown("### 🎨 Visualização")
 
 if "tema_claro" not in st.session_state:
@@ -33,9 +30,6 @@ st.sidebar.button(label_botao, on_click=alternar_tema, use_container_width=True)
 
 tema_claro = st.session_state.tema_claro
 
-# =========================
-# PALETA DE CORES
-# =========================
 if tema_claro:
     bg_color = "#f7f7f2"
     app_background = (
@@ -95,9 +89,6 @@ else:
     cursor_style = "auto"
     caret_color = "#ffffff"
 
-# =========================
-# CSS GERAL DA APLICAÇÃO
-# =========================
 style_css = f"""
 <style>
 :root {{
@@ -400,20 +391,11 @@ hr {{
 """
 
 st.markdown(style_css, unsafe_allow_html=True)
-# =========================
-# TÍTULO
-# =========================
 st.markdown('<h1 class="dashboard-title">📊 Dashboard PRO</h1>', unsafe_allow_html=True)
 
-# =========================
-# UPLOAD
-# =========================
 file = st.file_uploader("Carregar Arquivo", type=["csv", "xlsx", "json"])
 
 
-# =========================
-# FUNÇÕES
-# =========================
 def gerar_cores_unicas(valores):
     n = len(valores)
     if n == 0:
@@ -464,7 +446,6 @@ def padronizar_legenda(label):
     if len(nums) >= 2:
         inicio = formatar(nums[0])
         fim = formatar(nums[1])
-        # A tag <br> quebra a frase em duas linhas
         return f"De {inicio}<br>a {fim}"
 
     if len(nums) == 1:
@@ -540,7 +521,6 @@ def exportar_graficos_para_pdf(lista_de_graficos, cor_fundo_png):
                 showlegend=False,
                 margin=dict(l=margem_esq, r=40, t=40, b=margem_inf),
             )
-            # Mantemos tickangle=0 (reto) aqui também
             fig_pdf.update_xaxes(automargin=True, tickangle=0, dtick=1)
             fig_pdf.update_yaxes(automargin=True)
 
@@ -571,9 +551,6 @@ def exportar_graficos_para_pdf(lista_de_graficos, cor_fundo_png):
     return buffer
 
 
-# =========================
-# PROCESSAMENTO
-# =========================
 if file:
     nome_arquivo = file.name.lower()
 
@@ -594,9 +571,6 @@ if file:
         st.warning("Nenhuma coluna válida encontrada.")
         st.stop()
 
-    # =========================
-    # SIDEBAR
-    # =========================
     st.sidebar.title("⚙️ Filtros")
 
     colunas_selecionadas = st.sidebar.multiselect(
@@ -625,9 +599,6 @@ if file:
 
         st.session_state.curso_anterior = filtro_curso
 
-    # =========================
-    # FILTRO DATAFRAME
-    # =========================
     df_filtrado = df.copy()
 
     if "Curso" in df.columns:
@@ -640,9 +611,6 @@ if file:
                 df_filtrado["Curso"].astype(str).str.contains("Segurança", na=False)
             ]
 
-    # =========================
-    # FILTROS RESPOSTAS
-    # =========================
     st.sidebar.markdown("---")
     st.sidebar.subheader("🧩 Filtrar respostas")
 
@@ -665,17 +633,11 @@ if file:
         if respostas:
             df_filtrado = df_filtrado[df_filtrado[coluna].astype(str).isin(respostas)]
 
-    # =========================
-    # LISTA PDF E ÁREA DE GRÁFICOS
-    # =========================
     graficos_gerados = []
 
     area_graficos = st.empty()
 
     with area_graficos.container():
-        # =========================
-        # GRÁFICOS
-        # =========================
         for i, col in enumerate(colunas_selecionadas):
             if i % 2 == 0:
                 cols = st.columns(2)
@@ -911,9 +873,7 @@ if file:
                     }
                 )
 
-    # =========================
-    # EXPORTAR PDF
-    # =========================
+
     if graficos_gerados:
         st.sidebar.markdown("---")
         st.sidebar.subheader("📄 Exportar Resultados")
